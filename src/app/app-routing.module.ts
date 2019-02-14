@@ -7,7 +7,7 @@ import { HumanPositionHistoryComponent } from './pages/human-position-history/hu
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'about',
+    redirectTo: 'human-pos',
     pathMatch: 'full'
   },
   {
@@ -26,9 +26,10 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'about'
+    redirectTo: 'human-pos'
   }
 ];
+
 
 @NgModule({
   // useHash supports github.io demo page, remove in your app

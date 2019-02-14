@@ -70,6 +70,9 @@
 .p-0 {
   padding: 0 !important;
 }
+.black-theme .mat-expansion-panel, .black-theme .mat-table{
+  background: rgba(66, 66, 66, 0.70) !important;
+}
 @media (max-width: 767px) {
   .wc-date-row {
     font-size: 1em !important;

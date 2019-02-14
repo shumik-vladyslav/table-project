@@ -10,7 +10,7 @@
 
       <div class="offset-md-2 col-md-8 entry">
         <mat-accordion>
-          <mat-expansion-panel class="of-v" (closed)="panelOpenState = false" (opened)="panelOpenState = true">
+          <mat-expansion-panel expanded class="of-v" (closed)="panelOpenState = false" (opened)="panelOpenState = true">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 Filtr panel
@@ -136,8 +136,13 @@
 
             <ng-container *ngFor="let item of displayedColumns; let i = index" matColumnDef="{{item}}">
               <th mat-header-cell *matHeaderCellDef>
-                <span class="header-table-item">
+                <span class="header-table-item" (click)="sortFilds(item)">
                   {{item}}
+                  <span class="sort-arrow-wrap">
+                    <i class="material-icons" [ngClass]="{'up': sortDirection === 'ASC' && sortField === item, 'active': (sortField === item && showSortArrow === true), 'hide': !showSortArrow || sortDirection === null}">
+                      arrow_downward
+                    </i>
+                  </span>
                 </span>
               </th>
               <td mat-cell *matCellDef="let element">

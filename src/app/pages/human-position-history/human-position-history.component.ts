@@ -4,10 +4,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef
 } from '@angular/core';
-import { PageEvent } from '@angular/material';
+import { PageEvent, MatSort } from '@angular/material';
 import { ROUTE_ANIMATIONS_ELEMENTS } from '@app/core';
 import * as moment from 'moment';
 import { MainService } from '@app/service/main.service';
+import { Sort } from '@angular/material';
 
 const ELEMENT_DATA = [
   { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
@@ -38,36 +39,9 @@ export class HumanPositionHistoryComponent implements OnInit {
   data;
   dataSource;
   objectKeys = Object.keys;
-  panelOpenState = false;
+  panelOpenState = true;
 
-  displayedColumns = [
-    'id',
-    'commtrac_external_id',
-    'company_id',
-    'date',
-    'value',
-    'battery_voltage',
-    'external_voltage',
-    'type',
-    'units',
-    'callibration_date',
-    'sensor_serial_number',
-    'alarm',
-    'module_absent',
-    'module_warning',
-    'point1_tripped',
-    'point2_tripped',
-    'stel_alarm',
-    'twa_alarm',
-    'fault',
-    'pellister_over',
-    'input1',
-    'input2',
-    'output1',
-    'output2',
-    'power_source',
-    'mysqlId'
-  ];
+  displayedColumns;
 
   foods = [
     { value: 'steak-0', viewValue: 'Steak' },
@@ -82,16 +56,22 @@ export class HumanPositionHistoryComponent implements OnInit {
     timePicker: true,
     defaultOpen: false
   };
-
-  length = 100;
+  className = 'cerf';
+  length = 480;
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageIndex = 0;
+  sortField;
+  sortDirection;
+  showSortArrow;
+  sortCount;
 
   dataOptions = {
     start: this.pageIndex,
     length: this.pageSize,
-    draw: 1
+    draw: 1,
+    sortField: this.sortField,
+    sortDirection: this.sortDirection
   };
 
   dateObject = moment('1395-11-22', 'YYYY,MM,DD');
@@ -103,19 +83,57 @@ export class HumanPositionHistoryComponent implements OnInit {
     private mainService: MainService,
     private chRef: ChangeDetectorRef
   ) {
-    mainService.comtrackEvents(this.dataOptions).subscribe(data => {
-      this.data = data;
-      console.log(data);
-      this.dataSource = this.data.data;
-      this.displayedColumns = this.objectKeys(this.data.data[0]);
-      console.log(this.displayedColumns, 'displayedColumns');
-      console.log(this.dataSource, 'dataSource');
+    this.getData();
 
-      this.chRef.detectChanges();
-    });
     setTimeout(() => {
       this.chRef.detectChanges();
     }, 1000);
+  }
+
+  getData() {
+    this.mainService.comtrackEvents(this.dataOptions).subscribe(data => {
+      this.data = data;
+      this.dataSource = this.data.data;
+      this.displayedColumns = this.objectKeys(this.data.data[0]);
+      setTimeout(() => {
+        this.chRef.detectChanges();
+      }, 1000);
+    });
+  }
+
+  sortFilds(item) {
+    this.sortCount++;
+    this.showSortArrow = true;
+
+    if (this.sortField !== item) {
+      this.sortDirection = 'DESC';
+      this.sortCount = 1;
+    } else {
+      if (this.sortDirection === 'DESC') {
+        this.sortDirection = 'ASC';
+      } else {
+        this.sortDirection = 'DESC';
+      }
+      if (this.sortCount === 3) {
+        this.sortDirection = null;
+        this.sortCount = 0;
+        this.chRef.detectChanges();
+      }
+    }
+
+    console.log(this.sortCount, 'this.sortCount');
+
+    this.sortField = item;
+
+    this.dataOptions = {
+      start: this.pageIndex,
+      length: this.pageSize,
+      draw: 1,
+      sortField: this.sortField,
+      sortDirection: this.sortDirection
+    };
+
+    this.getData();
   }
 
   getPaginatorData(event) {
@@ -127,15 +145,13 @@ export class HumanPositionHistoryComponent implements OnInit {
     this.dataOptions = {
       start: this.pageIndex,
       length: this.pageSize,
-      draw: 1
+      draw: 1,
+      sortField: this.sortField,
+      sortDirection: this.sortDirection
     };
 
-    this.mainService.comtrackEvents(this.dataOptions).subscribe(data => {
-      this.data = data;
+    this.getData();
 
-      this.dataSource = this.data.data;
-      // this.displayedColumns = this.objectKeys(this.data.data[0])
-    });
     setTimeout(() => {
       this.chRef.detectChanges();
     }, 1000);
