@@ -1,0 +1,98 @@
+.app-loading {
+  .logo {
+    width: 64px;
+    height: 64px;
+    background: url(./assets/logo.png) center center no-repeat;
+    background-size: cover;
+  }
+}
+.show-datepicker > div > div.wc-date-popover {
+  display: block !important;
+  z-index: 1;
+}
+.custome-date-time-picker > div > div.wc-date-container {
+  display: none;
+}
+.of-v {
+  overflow: visible !important;
+}
+.full-width {
+  width: 100%;
+}
+.wc-date-popover {
+  top: 0 !important;
+}
+
+.custome-date-time-picker.dark-theme {
+  .wc-banner {
+    background: #616161 !important;
+  }
+  .wc-details {
+    background: #616161 !important;
+  }
+  .year-title {
+    background: #616161 !important;
+    box-shadow: 1px 0px #616161;
+  }
+  .calendar-days {
+    color: #616161;
+  }
+  .selected-day > span {
+    background: #616161 !important;
+  }
+  .years-list-view {
+    color: #616161 !important;
+  }
+  .months-view {
+    color: #616161 !important;
+  }
+  .calendar-day:hover > span {
+    background: #616161 !important;
+  }
+  .today > span {
+    border: none !important;
+  }
+  .cal-util > .ok {
+    color: #616161 !important;
+  }
+}
+.custome-date-time-picker
+  > div
+  > div.wc-date-popover.banner-true
+  > div.time-view
+  > div.time {
+  display: flex;
+  align-items: center;
+}
+.black-theme .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+  color: #ffffff !important;
+}
+.p-0 {
+  padding: 0 !important;
+}
+@media (max-width: 767px) {
+  .wc-date-row {
+    font-size: 1em !important;
+    padding: 5px !important;
+  }
+  .wc-month-row {
+    padding: 10px 0px 0px 0px !important;
+    font-size: 0.4em !important;
+  }
+  .wc-year-row {
+    font-size: 0.3em !important;
+    padding: 0px !important;
+  }
+  .wc-date-popover {
+    top: 63px !important;
+  }
+  .banner-true > .time-view {
+    top: 174px !important;
+  }
+  .wc-date-popover {
+    height: calc(100% - 63px) !important;
+  }
+  .winkel-calendar table td span {
+    line-height: 20px !important;
+  }
+}
